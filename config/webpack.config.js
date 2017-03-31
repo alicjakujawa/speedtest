@@ -31,6 +31,7 @@ const config = {
       },
       {
         test: /\.(sass|scss)$/,
+        exclude : /node_modules/,
         use: [
           'style-loader',
           'css-loader',
@@ -65,6 +66,7 @@ config.module.rules.push(
   { test: /\.otf(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=font/opentype' },
   { test: /\.ttf(\?.*)?$/,   loader: 'url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream' },
   { test: /\.eot(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
+  { test: /\.mp3$/,          loader: 'file-loader' },
   { test: /\.svg(\?.*)?$/,   loader: 'url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml' },
   { test: /\.(png|jpg)$/,    loader: 'url-loader?limit=8192' }
 )

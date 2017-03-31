@@ -18,15 +18,15 @@ const karmaConfig = {
   frameworks    : ['benchmark'],
   reporters     : ['benchmark'],
   preprocessors : {
-    [`${project.dir_test}/perf-bundler.js`] : ['webpack']
+    [`${project.dir_test}/perf-bundler.js`] : ['webpack', 'sourcemap']
   },
-  browsers : ['PhantomJS'],
+  browsers : ['Chrome'],
   webpack  : {
-    devtool : 'cheap-module-source-map',
+    devtool : 'inline-source-map',
     resolve : webpackConfig.resolve,
     plugins : webpackConfig.plugins,
     module: {
-      loaders : webpackConfig.module.loaders
+      rules : webpackConfig.module.rules
     }
   },
   webpackMiddleware : {
