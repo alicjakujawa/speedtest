@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import './HomeView.scss'
+import './VisualisationView.scss'
 import song from '../assets/shinedown-heroes.mp3'
 import chroma from 'chroma-js'
 
 const audioContext = new (window.AudioContext || window.webkitAudioContext)()
+let req = null
 
 function fetchSong (src, cb) {
   fetch(src)
@@ -69,7 +70,7 @@ const getNewCoords = (coords, step, w, h) => {
   }
 }
 
-class HomeView extends Component {
+class VisualisationView extends Component {
 
   initAnalyzer (audioBuffer) {
     let sourceNode = audioContext.createBufferSource()
@@ -132,9 +133,13 @@ class HomeView extends Component {
     })
   }
 
+  componentWillUnmount () {
+    cancelAnimationFrame(req)
+  }
+
   startAnim () {
     let prevT = performance.now()
-    requestAnimationFrame((T) => {
+    req = requestAnimationFrame((T) => {
       const dt = T - prevT
       prevT = T
       this.tick(dt / 1000)
@@ -256,4 +261,4 @@ class HomeView extends Component {
   }
 }
 
-export default HomeView
+export default VisualisationView

@@ -1,7 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Route, IndexRoute } from 'react-router'
 import createStore from './store/createStore'
 import AppContainer from './containers/AppContainer'
+import CoreLayout from './layouts/CoreLayout'
+import Home from './components/Home'
+import Visualisation from './components/Visualisation'
 
 // ========================================================
 // Store Instantiation
@@ -14,8 +18,15 @@ const store = createStore(initialState)
 // ========================================================
 const MOUNT_NODE = document.getElementById('root')
 
+const routes = (
+  <Route path='/' component={CoreLayout}>
+    <IndexRoute component={Home} />
+    <Route path='visualisation' component={Visualisation} />
+  </Route>
+)
+
 let render = () => {
-  const routes = require('./routes/index').default(store)
+  // const routes = require('./routes/index').default(store)
 
   ReactDOM.render(
     <AppContainer store={store} routes={routes} />,
