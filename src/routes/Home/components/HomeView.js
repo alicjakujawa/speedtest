@@ -52,6 +52,23 @@ const makePeakDetector = (min, max) => {
   }
 }
 
+const randomCoord = (type, w, h, step) => {
+  const dimension = (type === 'x') ? w : h
+  return Math.random() * (dimension - 2 * step) + step
+}
+
+const getNewCoords = (coords, step, w, h) => {
+  for (let key in coords) {
+    let coord = coords[key]
+    coord[0] += step * coord[1]
+    if ((coord[0] > (h - 2 * step) && coord[2] === 'y') ||
+       (coord[0] > (w - 2 * step) && coord[2] === 'x') ||
+       coord[0] < 2 * step) {
+      coord[1] *= -1
+    }
+  }
+}
+
 class HomeView extends Component {
 
   initAnalyzer (audioBuffer) {
@@ -81,6 +98,7 @@ class HomeView extends Component {
 
     const w = this.canvas.width
     const h = this.canvas.height
+    this.step = 5
 
     this.dots = Array.from({ length: 20 }, () => ({
       x: Math.random() * w,
@@ -94,6 +112,17 @@ class HomeView extends Component {
       y: h / 2,
       g: 0.1
     }
+
+    this.coords = Array.from({ length: 3 }, () => ({
+      x1: [randomCoord('x', w, h, this.step), -1, 'x'],
+      y1: [randomCoord('y', w, h, this.step), 1, 'y'],
+      x2: [randomCoord('x', w, h, this.step), -1.5, 'x'],
+      y2: [randomCoord('y', w, h, this.step), -1.5, 'y'],
+      cx1: [randomCoord('x', w, h, this.step), 1, 'x'],
+      cy1: [randomCoord('y', w, h, this.step), -1, 'y'],
+      cx2: [randomCoord('x', w, h, this.step), -1, 'x'],
+      cy2: [randomCoord('y', w, h, this.step), 1, 'y']
+    }))
   }
 
   componentDidMount () {
@@ -115,7 +144,7 @@ class HomeView extends Component {
 
   tick (dt) {
     const ctx = this.canvas.getContext('2d')
-    // const colorScale = chroma.scale(['#000000', '#ff0000', '#ffff00', '#ffffff']).out('hex')
+    const colorScale = chroma.scale('Spectral').domain([5, 10]).out('hex')
     const domain = this.freqDomain
     this.analyser.getByteFrequencyData(domain)
     this.peaks.forEach(peak => peak.feed(domain))
@@ -131,7 +160,9 @@ class HomeView extends Component {
     // ctx.fillStyle = 'black'
     // ctx.globalAlpha = 1
 
-    ctx.clearRect(0, 0, w, h)
+    // ctx.clearRect(0, 0, w, h)
+    ctx.fillStyle = 'black'
+    ctx.fillRect(0, 0, w, h)
 
     this.gravity.g = 20
 
@@ -169,6 +200,49 @@ class HomeView extends Component {
       ctx.stroke()
     }
     this.peaks.forEach(drawPeak)
+
+    const lineSize = Math.floor(linearPeak(this.peakMids.get().v, 2, 10))
+    this.step = Math.floor(linearPeak(this.peakMids.get().v, 5, 10))
+    const value = linearPeak(this.peakMids.get().v, 5, 10)
+    const strokeStyle = colorScale(value)
+    // lines
+    getNewCoords(this.coords[0], this.step, w, h)
+    for (let i = lineSize; i >= 0; i--) {
+      ctx.beginPath()
+      ctx.lineWidth = (i + 1) * 4 - 2
+      if (i === 0) {
+        ctx.strokeStyle = '#fff'
+      } else {
+        ctx.strokeStyle = chroma(strokeStyle).alpha(0.5).css()
+      }
+      const { x1, y1, x2, y2, cx1, cy1, cx2, cy2 } = this.coords[0]
+      ctx.moveTo(x1[0], y1[0])
+      ctx.bezierCurveTo(cx1[0], cy1[0], cx2[0], cy2[0], x2[0], y2[0])
+      ctx.stroke()
+      ctx.closePath()
+    }
+
+    const lineSize2 = Math.floor(linearPeak(this.peakLows.get().v, 2, 10))
+    this.step = Math.floor(linearPeak(this.peakLows.get().v, 5, 10))
+    const valueSecond = linearPeak(this.peakLows.get().v, 5, 10)
+
+    const strokeStyle2 = colorScale(valueSecond)
+
+    getNewCoords(this.coords[1], this.step, w, h)
+    for (let i = lineSize2; i >= 0; i--) {
+      ctx.beginPath()
+      ctx.lineWidth = (i + 1) * 4 - 2
+      if (i === 0) {
+        ctx.strokeStyle = '#fff'
+      } else {
+        ctx.strokeStyle = chroma(strokeStyle2).alpha(0.5).css()
+      }
+      const { x1, y1, x2, y2, cx1, cy1, cx2, cy2 } = this.coords[1]
+      ctx.moveTo(x1[0], y1[0])
+      ctx.bezierCurveTo(cx1[0], cy1[0], cx2[0], cy2[0], x2[0], y2[0])
+      ctx.stroke()
+      ctx.closePath()
+    }
   }
 
   render () {
