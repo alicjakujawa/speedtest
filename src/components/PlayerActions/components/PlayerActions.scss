@@ -1,0 +1,41 @@
+.player-actions {
+  padding: 50px 16px;
+}
+
+.button {
+  display: inline-block;
+  vertical-align: middle;
+  background: none;
+  border: 0;
+  outline: 0;
+
+  span {
+    color: #979797;
+    font-size: 32px;
+    transition: color 0.3s ease-out;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+.button-play {
+  span {
+    color: #fff;
+    font-size: 72px;
+  }
+}
+
+.bar-wrapper {
+  width: 100%;
+  margin-top: 50px;
+  height: 2px;
+  background: #979797;
+}
+
+.bar {
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #87d4d7), color-stop(100%, #8bfbff));
+  height: 2px;
+  transition: width 1s linear;
+}
