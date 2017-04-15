@@ -1,8 +1,20 @@
 .wrapper {
   display: flex;
   background-color: #192029;
+
+  .column + .column {
+    border-left: 1px solid #979797;
+  }
 }
 
 .column {
   flex: 1 0 auto;
+}
+
+.column-left {
+  flex: 0 0 55%;
+}
+
+.visualisation {
+  height: 320px;
 }

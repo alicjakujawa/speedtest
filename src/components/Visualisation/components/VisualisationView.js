@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import './VisualisationView.scss'
 import song from '../assets/shinedown-heroes.mp3'
 import chroma from 'chroma-js'
@@ -251,14 +251,19 @@ class VisualisationView extends Component {
   }
 
   render () {
+    const props = this.props
     return (
-      <div>
-        <h4>Music player!</h4>
+      <span>
         <audio src={song} ref='audioEl' />
-        <canvas height='768' width='1024' ref={c => { this.canvas = c }} />
-      </div>
+        <canvas height={props.height} width={props.width} ref={c => { this.canvas = c }} />
+      </span>
     )
   }
+}
+
+VisualisationView.propTypes = {
+  width: PropTypes.number,
+  height: PropTypes.number
 }
 
 export default VisualisationView
