@@ -1,0 +1,13 @@
+import React, { Component } from 'react'
+import HomeView from '../components/Home'
+
+class HomeContainer extends Component {
+
+  render () {
+    return (
+      <HomeView />
+    )
+  }
+}
+
+export default HomeContainer

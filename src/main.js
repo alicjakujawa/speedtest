@@ -4,7 +4,7 @@ import { Route, IndexRoute } from 'react-router'
 import createStore from './store/createStore'
 import AppContainer from './containers/AppContainer'
 import CoreLayout from './layouts/CoreLayout'
-import Home from './components/Home'
+import HomeContainer from './containers/HomeContainer'
 import Visualisation from './components/Visualisation'
 
 // ========================================================
@@ -20,7 +20,7 @@ const MOUNT_NODE = document.getElementById('root')
 
 const routes = (
   <Route path='/' component={CoreLayout}>
-    <IndexRoute component={Home} />
+    <IndexRoute component={HomeContainer} />
     <Route path='visualisation' component={Visualisation} />
   </Route>
 )
