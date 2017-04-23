@@ -74,12 +74,15 @@ class VisualisationView extends Component {
 
   initAnalyzer (audioBuffer) {
     let sourceNode = audioContext.createBufferSource()
+    let gainNode = audioContext.createGain()
     this.analyser = audioContext.createAnalyser()
     this.analyser.smoothingTimeConstant = 0.5
     this.freqDomain = new Uint8Array(this.analyser.frequencyBinCount)
     sourceNode.buffer = audioBuffer
-    sourceNode.connect(this.analyser)
+    sourceNode.connect(gainNode)
+    gainNode.connect(this.analyser)
     this.analyser.connect(audioContext.destination)
+    gainNode.gain.value = 0
     sourceNode.start()
     let bands = []
     // for (let i = 0; i < this.analyser.frequencyBinCount / 64; i++) {

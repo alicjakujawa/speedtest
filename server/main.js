@@ -5,8 +5,35 @@ const webpack = require('webpack')
 const webpackConfig = require('../config/webpack.config')
 const project = require('../config/project.config')
 const compress = require('compression')
+// const multer = require('multer')
 
 const app = express()
+
+// const storage = multer.diskStorage({
+//   destination: './files',
+//   filename (req, file, cb) {
+//     cb(null, `${new Date()}-${file.originalname}`)
+//   }
+// })
+//
+// const upload = multer({ storage })
+//
+// app.post('/files', upload.array('files'), (req, res) => {
+//   console.log(req, upload)
+//   // const file = req.file
+//   // const meta = req.body
+//
+//   // axios({
+//   //   url: `https://api.myrest.com/uploads`,
+//   //   method: 'post',
+//   //   data: {
+//   //     file,
+//   //     name: meta.name
+//   //   }
+//   // })
+//   //  .then(response => res.status(200).json(response.data.data))
+//   //  .catch((error) => res.status(500).json(error.response.data))
+// })
 
 // Apply gzip compression
 app.use(compress())

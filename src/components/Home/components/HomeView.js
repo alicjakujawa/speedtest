@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import SongDetails from '../../SongDetails/components/SongDetails'
 import PlayerActions from '../../PlayerActions/components/PlayerActions'
 import PlayerPlaylist from '../../PlayerPlaylist/components/PlayerPlaylist'
@@ -49,7 +49,10 @@ class HomeView extends Component {
         <div className='column column-left'>
           <div className='visualisation' ref='visualisation'>
             {this.state.show ?
-              <Visualisation width={this.state.offsetWidth} height={this.state.offsetHeight} />
+              <Visualisation
+                width={this.state.offsetWidth}
+                height={this.state.offsetHeight}
+              />
               : null
             }
           </div>
@@ -57,11 +60,15 @@ class HomeView extends Component {
           <PlayerActions progress='40' />
         </div>
         <div className='column'>
-          <PlayerPlaylist songs={songs} />
+          <PlayerPlaylist onDrop={this.props.onDrop} songs={songs} />
         </div>
       </div>
     )
   }
+}
+
+HomeView.propTypes = {
+  onDrop: PropTypes.func
 }
 
 export default HomeView
