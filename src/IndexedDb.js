@@ -26,7 +26,7 @@ class IndexedDB {
       let transaction = contentDB.transaction(['files'], 'readwrite')
       let contentStore = transaction.objectStore('files')
       contentStore.getAll().onsuccess = event => {
-        cb(event.target.result[0])
+        cb(event.target.result)
       }
     }
   }

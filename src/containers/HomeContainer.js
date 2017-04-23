@@ -18,7 +18,7 @@ class HomeContainer extends Component {
       if (databaseExists) {
         IndexedDb.checkObjectStore((response) => {
           if (response) {
-            this.setState({ files: this.state.files.concat([response]) })
+            this.setState({ files: this.state.files.concat(response) })
           }
         })
       }
