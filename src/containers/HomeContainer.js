@@ -1,56 +1,41 @@
 import { connect } from 'react-redux'
 import React, { Component, PropTypes } from 'react'
-import IndexedDb from '../IndexedDb'
-import { onFilesDrop, saveFiles } from '../actions'
+import { addFiles, streamFiles } from '../fileStore'
+import { updatePlaylist, runSong } from '../actions'
 import HomeView from '../components/Home'
 
 class HomeContainer extends Component {
 
   componentDidMount () {
-    IndexedDb.init()
-    IndexedDb.dbExists((databaseExists) => {
-      if (databaseExists) {
-        IndexedDb.checkObjectStore((response) => {
-          if (response) {
-            this.props.saveFiles(response)
-          }
-        })
-      }
+    this.unregisterStream = streamFiles(files => {
+      this.props.updatePlaylist(files)
     })
   }
 
-  saveFiles (files) {
-    const updatedFiles = this.props.files.concat(files)
-    IndexedDb.storeContent(updatedFiles, (files) => {
-      this.props.saveFiles(files)
-    })
-  }
-
-  onFilesDrop = (files) => {
-    this.saveFiles(files)
-    this.props.onFilesDrop(files)
+  componentWillUnmount () {
+    this.unregisterStream()
   }
 
   render () {
     return (
-      <HomeView files={this.props.files} onDrop={this.onFilesDrop} />
+      <HomeView playlist={this.props.playlist} onDrop={addFiles} runSong={this.props.runSong} />
     )
   }
 }
 
 HomeContainer.propTypes = {
-  onFilesDrop: PropTypes.func,
-  saveFiles: PropTypes.func,
-  files: PropTypes.array
+  updatePlaylist: PropTypes.func.isRequired,
+  runSong: PropTypes.func.isRequired,
+  playlist: PropTypes.array.isRequired
 }
 
 const mapDispatchToProps = ({
-  onFilesDrop,
-  saveFiles
+  updatePlaylist,
+  runSong
 })
 
 const mapStateToProps = state => ({
-  files: state.audio.files
+  playlist: state.audio.playlist
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer)

@@ -1,15 +1,23 @@
 import { AUDIO } from '../constants/ActionTypes'
 
-export function onFilesDrop (files) {
+export function updatePlaylist (playlist) {
   return {
-    type: AUDIO.ADD_FILES,
-    files
+    type: AUDIO.PLAYLIST_UPDATED,
+    playlist
   }
 }
 
-export function saveFiles (files) {
+export function runSong (id) {
+  console.log('runSong', id)
   return {
-    type: AUDIO.FILES_ADDED,
-    files
+    type: AUDIO.RUN_SONG,
+    id
+  }
+}
+
+export function startDecode (decodeId) {
+  return {
+    type: AUDIO.DECODE,
+    decodeId
   }
 }

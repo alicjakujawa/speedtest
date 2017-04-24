@@ -1,12 +1,13 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import reducer from './reducers'
+import audioDecode from '../middlewares/audioDecode'
 
 export default (initialState = {}) => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  const middleware = [thunk]
+  const middleware = [thunk, audioDecode]
 
   // ======================================================
   // Store Enhancers

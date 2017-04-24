@@ -5,29 +5,6 @@ import PlayerPlaylist from '../../PlayerPlaylist/components/PlayerPlaylist'
 import Visualisation from '../../Visualisation'
 import './HomeView.scss'
 
-const songs = [
-  {
-    name: 'Always In My Head',
-    duration: 360 // seconds
-  },
-  {
-    name: 'Magic',
-    duration: 285 // seconds
-  },
-  {
-    name: 'True Love',
-    duration: 345 // seconds
-  },
-  {
-    name: 'Midnight',
-    duration: 420 // seconds
-  },
-  {
-    name: 'Oceans',
-    duration: 360 // seconds
-  }
-]
-
 class HomeView extends Component {
   constructor (props) {
     super(props)
@@ -48,8 +25,8 @@ class HomeView extends Component {
       <div className='wrapper'>
         <div className='column column-left'>
           <div className='visualisation' ref='visualisation'>
-            {this.state.show ?
-              <Visualisation
+            {this.state.show
+              ? <Visualisation
                 width={this.state.offsetWidth}
                 height={this.state.offsetHeight}
               />
@@ -60,10 +37,7 @@ class HomeView extends Component {
           <PlayerActions progress='40' />
         </div>
         <div className='column'>
-          { this.props.files.length > 1 ?
-            <PlayerPlaylist onDrop={this.props.onDrop} songs={this.props.files} />
-            : null
-          }
+          <PlayerPlaylist runSong={this.props.runSong} onDrop={this.props.onDrop} playlist={this.props.playlist} />
         </div>
       </div>
     )
@@ -71,8 +45,9 @@ class HomeView extends Component {
 }
 
 HomeView.propTypes = {
-  onDrop: PropTypes.func,
-  files: PropTypes.array
+  onDrop: PropTypes.func.isRequired,
+  playlist: PropTypes.array.isRequired,
+  runSong: PropTypes.func.isRequired
 }
 
 export default HomeView
