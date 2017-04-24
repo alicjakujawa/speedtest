@@ -60,7 +60,10 @@ class HomeView extends Component {
           <PlayerActions progress='40' />
         </div>
         <div className='column'>
-          <PlayerPlaylist onDrop={this.props.onDrop} songs={songs} />
+          { this.props.files.length > 1 ?
+            <PlayerPlaylist onDrop={this.props.onDrop} songs={this.props.files} />
+            : null
+          }
         </div>
       </div>
     )
@@ -68,7 +71,8 @@ class HomeView extends Component {
 }
 
 HomeView.propTypes = {
-  onDrop: PropTypes.func
+  onDrop: PropTypes.func,
+  files: PropTypes.array
 }
 
 export default HomeView

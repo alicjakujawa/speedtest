@@ -11,6 +11,12 @@ export default function counter (state = initialState, action) {
         ...state,
         ...state.files
       }
+    case AUDIO.FILES_ADDED:
+      return {
+        ...state,
+        files: state.files.concat(action.files)
+      }
+
     default:
       return state
   }

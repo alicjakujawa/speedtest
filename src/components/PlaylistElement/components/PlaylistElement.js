@@ -3,6 +3,7 @@ import './PlaylistElement.scss'
 
 class PlaylistElement extends Component {
   render () {
+    console.log(this.props.song, 'song')
     const { duration, name } = this.props.song
     const minutes = Math.floor(duration / 60)
     const seconds = duration - minutes * 60

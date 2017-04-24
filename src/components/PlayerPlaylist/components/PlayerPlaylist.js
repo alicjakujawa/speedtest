@@ -11,7 +11,7 @@ class PlayerPlaylist extends Component {
           <h4 className='title'>Ghost Stories</h4>
         </div>
         <Dropzone onDrop={this.props.onDrop} className='playlist'>
-          { this.props.songs.map(function (song, i) {
+          { this.props.songs && this.props.songs.map(function (song, i) {
             return <PlaylistElement song={song} index={i + 1} key={i} />
           }) }
         </Dropzone>
