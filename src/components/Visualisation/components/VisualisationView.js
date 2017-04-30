@@ -117,23 +117,27 @@ class VisualisationView extends Component {
       this.startAnim()
     }
     if (!this.props.audioInProgress) {
-      console.log('cancel!')
       cancelAnimationFrame(req)
+      req = null
     }
   }
 
   componentWillUnmount () {
     cancelAnimationFrame(req)
+    req = null
   }
 
   startAnim () {
     let prevT = performance.now()
-    req = requestAnimationFrame((T) => {
-      const dt = T - prevT
-      prevT = T
-      this.tick(dt / 1000)
-      this.startAnim()
-    })
+    if (!req) {
+      const localTick = (T) => {
+        const dt = T - prevT
+        prevT = T
+        this.tick(dt / 1000)
+        req = requestAnimationFrame(localTick)
+      }
+      req = requestAnimationFrame(localTick)
+    }
   }
 
   tick (dt) {
