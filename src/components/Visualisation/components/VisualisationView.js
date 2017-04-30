@@ -3,16 +3,7 @@ import './VisualisationView.scss'
 import song from '../assets/shinedown-heroes.mp3'
 import chroma from 'chroma-js'
 
-const audioContext = new (window.AudioContext || window.webkitAudioContext)()
 let req = null
-
-function fetchSong (src, cb) {
-  fetch(src)
-    .then(response => response.arrayBuffer())
-    .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
-    .then(audioBuffer => cb(audioBuffer))
-    .catch(e => console.error(e))
-}
 
 const sumRange = (buf, min, max) => {
   let sum = 0
@@ -72,18 +63,9 @@ const getNewCoords = (coords, step, w, h) => {
 
 class VisualisationView extends Component {
 
-  initAnalyzer (audioBuffer) {
-    let sourceNode = audioContext.createBufferSource()
-    let gainNode = audioContext.createGain()
-    this.analyser = audioContext.createAnalyser()
-    this.analyser.smoothingTimeConstant = 0.5
+  initAnalyzer (analyser) {
+    this.analyser = analyser
     this.freqDomain = new Uint8Array(this.analyser.frequencyBinCount)
-    sourceNode.buffer = audioBuffer
-    sourceNode.connect(gainNode)
-    gainNode.connect(this.analyser)
-    this.analyser.connect(audioContext.destination)
-    gainNode.gain.value = 0
-    sourceNode.start()
     let bands = []
     // for (let i = 0; i < this.analyser.frequencyBinCount / 64; i++) {
     //   bands.push([i * 64, (i + 1) * 64])
@@ -129,11 +111,15 @@ class VisualisationView extends Component {
     }))
   }
 
-  componentDidMount () {
-    fetchSong(this.refs.audioEl.src, (audioBuffer) => {
-      this.initAnalyzer(audioBuffer)
+  componentDidUpdate () {
+    if (this.props.analyser) { // check also if its changed
+      this.initAnalyzer(this.props.analyser)
       this.startAnim()
-    })
+    }
+    if (!this.props.audioInProgress) {
+      console.log('cancel!')
+      cancelAnimationFrame(req)
+    }
   }
 
   componentWillUnmount () {
@@ -266,7 +252,9 @@ class VisualisationView extends Component {
 
 VisualisationView.propTypes = {
   width: PropTypes.number,
-  height: PropTypes.number
+  height: PropTypes.number,
+  analyser: PropTypes.object,
+  audioInProgress: PropTypes.bool.isRequired
 }
 
 export default VisualisationView

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import React, { Component, PropTypes } from 'react'
 import { addFiles, streamFiles } from '../fileStore'
-import { updatePlaylist, runSong } from '../actions'
+import { updatePlaylist, runSong, play, stop } from '../actions'
 import HomeView from '../components/Home'
 
 class HomeContainer extends Component {
@@ -18,7 +18,15 @@ class HomeContainer extends Component {
 
   render () {
     return (
-      <HomeView playlist={this.props.playlist} onDrop={addFiles} runSong={this.props.runSong} />
+      <HomeView
+        playlist={this.props.playlist}
+        onDrop={addFiles}
+        runSong={this.props.runSong}
+        play={this.props.play}
+        stop={this.props.stop}
+        analyser={this.props.analyser}
+        audioInProgress={this.props.audioInProgress}
+      />
     )
   }
 }
@@ -26,16 +34,26 @@ class HomeContainer extends Component {
 HomeContainer.propTypes = {
   updatePlaylist: PropTypes.func.isRequired,
   runSong: PropTypes.func.isRequired,
-  playlist: PropTypes.array.isRequired
+  play: PropTypes.func.isRequired,
+  stop: PropTypes.func.isRequired,
+  playlist: PropTypes.array.isRequired,
+  currentPlayedId: PropTypes.string,
+  analyser: PropTypes.object,
+  audioInProgress: PropTypes.bool.isRequired
 }
 
 const mapDispatchToProps = ({
   updatePlaylist,
-  runSong
+  runSong,
+  play,
+  stop
 })
 
 const mapStateToProps = state => ({
-  playlist: state.audio.playlist
+  playlist: state.audio.playlist,
+  currentPlayedId: state.audio.currentPlayedId,
+  analyser: state.audio.analyser,
+  audioInProgress: state.audio.audioInProgress
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer)

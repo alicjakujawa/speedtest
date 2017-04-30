@@ -29,12 +29,14 @@ class HomeView extends Component {
               ? <Visualisation
                 width={this.state.offsetWidth}
                 height={this.state.offsetHeight}
+                analyser={this.props.analyser}
+                audioInProgress={this.props.audioInProgress}
               />
               : null
             }
           </div>
           <SongDetails />
-          <PlayerActions progress='40' />
+          <PlayerActions play={this.props.play} stop={this.props.stop} progress='40' />
         </div>
         <div className='column'>
           <PlayerPlaylist runSong={this.props.runSong} onDrop={this.props.onDrop} playlist={this.props.playlist} />
@@ -47,7 +49,11 @@ class HomeView extends Component {
 HomeView.propTypes = {
   onDrop: PropTypes.func.isRequired,
   playlist: PropTypes.array.isRequired,
-  runSong: PropTypes.func.isRequired
+  runSong: PropTypes.func.isRequired,
+  analyser: PropTypes.object,
+  play: PropTypes.func.isRequired,
+  stop: PropTypes.func.isRequired,
+  audioInProgress: PropTypes.bool.isRequired
 }
 
 export default HomeView
