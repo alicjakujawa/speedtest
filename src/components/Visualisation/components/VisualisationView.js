@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import './VisualisationView.scss'
 import chroma from 'chroma-js'
 import { getAnalyser } from '../../../audioProvider'
 
