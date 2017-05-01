@@ -1,11 +1,11 @@
 import { AUDIO } from '../constants/ActionTypes'
+import R from 'ramda'
 
 const initialState = {
   playlist: [], // playlist data
   decodedAudioInfo: {},
   currentPlayedId: null, // id of file
   decodingInProgress: [], // ids currently decoded
-  analyser: null,
   audioInProgress: false
 }
 
@@ -24,9 +24,11 @@ export default function counter (state = initialState, action) {
     case AUDIO.DECODED_BUFFER:
       let newSong = {}
       newSong[action.id] = action.buffer
+      const indexOfDecodedAudio = state.decodingInProgress.indexOf(action.id)
       return {
         ...state,
-        decodedAudioInfo: { ...state.decodedAudioInfo, ...newSong }
+        decodedAudioInfo: { ...state.decodedAudioInfo, ...newSong },
+        decodingInProgress: R.remove(indexOfDecodedAudio, 1, state.decodingInProgress)
       }
     case AUDIO.PLAYLIST_UPDATED:
       return {
@@ -44,7 +46,8 @@ export default function counter (state = initialState, action) {
       if (state.playlist.length) {
         return {
           ...state,
-          currentPlayedId: state.playlist[0].id
+          currentPlayedId: state.playlist[0].id,
+          audioInProgress: true
         }
       }
       return state
@@ -60,12 +63,6 @@ export default function counter (state = initialState, action) {
       return {
         ...state,
         audioInProgress: true
-      }
-
-    case AUDIO.SET_ANALYSER:
-      return {
-        ...state,
-        analyser: action.analyser
       }
 
     default:

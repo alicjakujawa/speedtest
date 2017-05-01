@@ -24,7 +24,6 @@ class HomeContainer extends Component {
         runSong={this.props.runSong}
         play={this.props.play}
         stop={this.props.stop}
-        analyser={this.props.analyser}
         audioInProgress={this.props.audioInProgress}
       />
     )
@@ -38,7 +37,6 @@ HomeContainer.propTypes = {
   stop: PropTypes.func.isRequired,
   playlist: PropTypes.array.isRequired,
   currentPlayedId: PropTypes.string,
-  analyser: PropTypes.object,
   audioInProgress: PropTypes.bool.isRequired
 }
 
@@ -52,7 +50,6 @@ const mapDispatchToProps = ({
 const mapStateToProps = state => ({
   playlist: state.audio.playlist,
   currentPlayedId: state.audio.currentPlayedId,
-  analyser: state.audio.analyser,
   audioInProgress: state.audio.audioInProgress
 })
 

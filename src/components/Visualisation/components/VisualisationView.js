@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import './VisualisationView.scss'
-import song from '../assets/shinedown-heroes.mp3'
 import chroma from 'chroma-js'
+import { getAnalyser } from '../../../audioProvider'
 
 let req = null
 
@@ -63,8 +63,8 @@ const getNewCoords = (coords, step, w, h) => {
 
 class VisualisationView extends Component {
 
-  initAnalyzer (analyser) {
-    this.analyser = analyser
+  initAnalyzer () {
+    this.analyser = getAnalyser()
     this.freqDomain = new Uint8Array(this.analyser.frequencyBinCount)
     let bands = []
     // for (let i = 0; i < this.analyser.frequencyBinCount / 64; i++) {
@@ -112,8 +112,8 @@ class VisualisationView extends Component {
   }
 
   componentDidUpdate () {
-    if (this.props.analyser) { // check also if its changed
-      this.initAnalyzer(this.props.analyser)
+    if (this.props.audioInProgress) { // check also if its changed
+      this.initAnalyzer()
       this.startAnim()
     }
     if (!this.props.audioInProgress) {
@@ -247,7 +247,6 @@ class VisualisationView extends Component {
     const props = this.props
     return (
       <span>
-        <audio src={song} ref='audioEl' />
         <canvas height={props.height} width={props.width} ref={c => { this.canvas = c }} />
       </span>
     )
@@ -257,7 +256,6 @@ class VisualisationView extends Component {
 VisualisationView.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
-  analyser: PropTypes.object,
   audioInProgress: PropTypes.bool.isRequired
 }
 

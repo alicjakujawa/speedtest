@@ -36,9 +36,7 @@ export const addFiles = (files) => {
     file,
     id: uuid()
   }))]
-  files.forEach(file => {
-    localforage.setItem('files', localFileList)
-  })
+  localforage.setItem('files', localFileList)
   notifyUpdate()
 }
 

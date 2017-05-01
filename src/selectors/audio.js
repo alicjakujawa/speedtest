@@ -34,6 +34,13 @@ export const shouldTriggerDecode = createSelector(
   (played, decoded, decodingInProgress) => !decoded && !!played && !decodingInProgress
 )
 
+export const shouldRunSong = createSelector(
+  playedItemSelector,
+  decodedPlayedSelector,
+  decodingPlayedInProgressSelector,
+  (played, decoded, decodingInProgress) => !!decoded && !!played && !decodingInProgress
+)
+
 export const shouldStartPlay = createSelector(
   playedItemSelector,
   audioInProgress,

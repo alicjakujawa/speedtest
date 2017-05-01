@@ -1,5 +1,5 @@
 import { AUDIO } from '../constants/ActionTypes'
-import { getAudioContext, getAnalyserForBuffer, stopPlay, startPlay } from '../audioProvider'
+import { getAudioContext, setBuffer, stopPlay, startPlay } from '../audioProvider'
 
 export function updatePlaylist (playlist) {
   return {
@@ -8,17 +8,17 @@ export function updatePlaylist (playlist) {
   }
 }
 
-export function runSong (id) {
+function run (id) {
   return {
     type: AUDIO.RUN_SONG,
     id
   }
 }
 
-export function setAnalyser (analyser) {
-  return {
-    type: AUDIO.SET_ANALYSER,
-    analyser
+export function runSong (id) {
+  return (dispatch, getState) => {
+    // const state = getState()
+    dispatch(run(id))
   }
 }
 
@@ -71,7 +71,7 @@ export function startDecode (decodeId) {
     reader.onload = function (e) {
       getAudioContext().decodeAudioData(e.target.result, buffer => {
         dispatch(setDecodedBuffer(buffer, decodeId))
-        dispatch(setAnalyser(getAnalyserForBuffer(buffer)))
+        setBuffer(buffer)
       })
     }
     reader.readAsArrayBuffer(fileObj.file)

@@ -29,7 +29,6 @@ class HomeView extends Component {
               ? <Visualisation
                 width={this.state.offsetWidth}
                 height={this.state.offsetHeight}
-                analyser={this.props.analyser}
                 audioInProgress={this.props.audioInProgress}
               />
               : null
@@ -50,7 +49,6 @@ HomeView.propTypes = {
   onDrop: PropTypes.func.isRequired,
   playlist: PropTypes.array.isRequired,
   runSong: PropTypes.func.isRequired,
-  analyser: PropTypes.object,
   play: PropTypes.func.isRequired,
   stop: PropTypes.func.isRequired,
   audioInProgress: PropTypes.bool.isRequired

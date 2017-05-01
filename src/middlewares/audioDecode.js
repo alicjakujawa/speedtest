@@ -8,8 +8,10 @@ export default ({ dispatch, getState }) => next => action => {
   if (shouldTriggerDecode(state)) {
     dispatch(startDecode(playIdSelector(state)))
   }
+  // if (shouldRunSong(state)) {
+  //   console.log('should run song')
+  // }
   if (shouldStartPlay(state)) {
-    console.log('should start')
     dispatch(start())
   }
   return ret
