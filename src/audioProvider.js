@@ -4,7 +4,11 @@ let gainNode = audioContext.createGain()
 let analyser = audioContext.createAnalyser()
 analyser.smoothingTimeConstant = 0.5
 
-export const setBuffer = (buffer) => {
+export const setCurrentPlayBuffer = (buffer) => {
+  if (sourceNode && sourceNode.buffer === buffer) {
+    return
+  }
+
   if (sourceNode && sourceNode.buffer) {
     sourceNode.stop()
   }

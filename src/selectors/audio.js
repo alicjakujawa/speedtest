@@ -6,7 +6,6 @@ export const playIdSelector = scoped(scope => scope.currentPlayedId)
 const playlistSelector = scoped(scope => scope.playlist)
 const decodedSelector = scoped(scope => scope.decodedAudioInfo)
 const decodingInProgressSelector = scoped(scope => scope.decodingInProgress)
-const audioInProgress = scoped(scope => scope.audioInProgress)
 
 export const playedItemSelector = createSelector(
   playIdSelector,
@@ -14,7 +13,7 @@ export const playedItemSelector = createSelector(
   (id, playlist) => playlist.find(i => i.id === id) || null
 )
 
-const decodedPlayedSelector = createSelector(
+export const decodedPlayedSelector = createSelector(
   playIdSelector,
   decodedSelector,
   (id, decoded) => decoded[id] || null
@@ -31,11 +30,4 @@ export const shouldTriggerDecode = createSelector(
   decodedPlayedSelector,
   decodingPlayedInProgressSelector,
   (played, decoded, decodingInProgress) => !decoded && !!played && !decodingInProgress
-)
-
-export const shouldRunSong = createSelector(
-  playedItemSelector,
-  decodedPlayedSelector,
-  decodingPlayedInProgressSelector,
-  (played, decoded, decodingInProgress) => !!decoded && !!played && !decodingInProgress
 )

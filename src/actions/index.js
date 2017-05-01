@@ -1,5 +1,5 @@
 import { AUDIO } from '../constants/ActionTypes'
-import { getAudioContext, setBuffer, stopPlay, startPlay } from '../audioProvider'
+import { getAudioContext, stopPlay, startPlay } from '../audioProvider'
 
 export function updatePlaylist (playlist) {
   return {
@@ -46,7 +46,6 @@ export function startDecode (decodeId) {
     reader.onload = function (e) {
       getAudioContext().decodeAudioData(e.target.result, buffer => {
         dispatch(setDecodedBuffer(buffer, decodeId))
-        setBuffer(buffer)
       })
     }
     reader.readAsArrayBuffer(fileObj.file)
