@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import React, { Component, PropTypes } from 'react'
 import { addFiles, streamFiles } from '../fileStore'
-import { updatePlaylist, runSong, play, stop } from '../actions'
+import { updatePlaylist, play, stop } from '../actions'
 import HomeView from '../components/Home'
 
 class HomeContainer extends Component {
@@ -9,6 +9,8 @@ class HomeContainer extends Component {
   componentDidMount () {
     this.unregisterStream = streamFiles(files => {
       this.props.updatePlaylist(files)
+      // FIXME: "HMR"
+      this.props.play()
     })
   }
 
