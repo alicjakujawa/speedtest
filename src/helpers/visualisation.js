@@ -7,10 +7,7 @@ for (let i = 0; i < lutSize; i++) {
   sinLut[i] = Math.sin(rad) * 1024
 }
 
-export const draw = (dt, T, ctx, w, h, buffer) => {
-  // const buffer = this.imgData.data
-  // const freq = this.freqDomain
-
+export const draw = (dt, T, ctx, w, h, buffer, value) => {
   // binary fractal
   // buffer[i + 0] = (x & y) & 254
   // buffer[i + 1] = (x | y) & 254
@@ -20,6 +17,7 @@ export const draw = (dt, T, ctx, w, h, buffer) => {
   let i = 0
   const t1Inc = 3 * Math.sin(T / 305) + 2 * Math.sin(T / 1000) + Math.sin(T / 733)
   const t2Inc = 6 + 3 * Math.sin(T / 512) + Math.sin(T / 561)
+  // const t2Inc = peak
   const t3Inc = 1 + 2 * Math.sin(T / 412) + Math.sin(T / 621)
   const t4Inc = 6 + 2 * Math.sin(T / 553) + 1.2 * Math.sin(T / 335)
 
