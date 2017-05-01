@@ -46,8 +46,8 @@ export default function counter (state = initialState, action) {
       if (state.playlist.length) {
         return {
           ...state,
-          currentPlayedId: state.playlist[0].id,
-          audioInProgress: true
+          audioInProgress: true,
+          currentPlayedId: action.id || state.playlist[0].id
         }
       }
       return state

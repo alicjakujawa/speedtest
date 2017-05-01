@@ -37,9 +37,11 @@ function setDecodedBuffer (buffer, id) {
   }
 }
 
-export function play () {
+export function play (id) {
+  startPlay()
   return {
-    type: AUDIO.PLAY
+    type: AUDIO.PLAY,
+    id
   }
 }
 
@@ -50,18 +52,12 @@ export function stop () {
   }
 }
 
-function setAudioInProgress () {
-  return {
-    type: AUDIO.AUDIO_IN_PROGRESS
-  }
-}
-
-export function start () {
-  return (dispatch, getState) => {
-    startPlay()
-    dispatch(setAudioInProgress())
-  }
-}
+// export function start () {
+//   return (dispatch, getState) => {
+//     startPlay()
+//     dispatch(setAudioInProgress())
+//   }
+// }
 
 export function startDecode (decodeId) {
   return (dispatch, getState) => {

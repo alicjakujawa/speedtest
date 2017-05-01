@@ -14,7 +14,6 @@ export const setBuffer = (buffer) => {
   gainNode.connect(analyser)
   analyser.connect(audioContext.destination)
   sourceNode.start()
-  // return analyser
 }
 
 export const getAnalyser = () => analyser
@@ -24,13 +23,11 @@ export const getAudioContext = () => audioContext
 export const stopPlay = () => {
   if (sourceNode && sourceNode.buffer) {
     sourceNode.disconnect(gainNode)
-    // sourceNode.stop()
   }
 }
 
 export const startPlay = () => {
   if (sourceNode && sourceNode.buffer) {
-    // sourceNode.start()
     sourceNode.connect(gainNode)
   }
 }

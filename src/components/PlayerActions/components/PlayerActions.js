@@ -6,7 +6,7 @@ class PlayerActions extends Component {
     return (
       <div className='player-actions'>
         <button className='button'><span className='glyphicon glyphicon-step-backward' /></button>
-        <button onClick={this.props.play} className='button button-play'>
+        <button onClick={() => this.props.play(false)} className='button button-play'>
           <span className='glyphicon glyphicon-play-circle' />
         </button>
         <button onClick={this.props.stop} className='button button-play'>
