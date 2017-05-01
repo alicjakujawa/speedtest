@@ -1,5 +1,5 @@
-import { startDecode, start } from '../actions'
-import { shouldTriggerDecode, playIdSelector, shouldStartPlay } from '../selectors/audio'
+import { startDecode } from '../actions'
+import { shouldTriggerDecode, playIdSelector } from '../selectors/audio'
 
 export default ({ dispatch, getState }) => next => action => {
   const ret = next(action)
@@ -11,8 +11,5 @@ export default ({ dispatch, getState }) => next => action => {
   // if (shouldRunSong(state)) {
   //   console.log('should run song')
   // }
-  if (shouldStartPlay(state)) {
-    dispatch(start())
-  }
   return ret
 }

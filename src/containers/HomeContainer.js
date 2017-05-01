@@ -21,7 +21,6 @@ class HomeContainer extends Component {
       <HomeView
         playlist={this.props.playlist}
         onDrop={addFiles}
-        runSong={this.props.runSong}
         play={this.props.play}
         stop={this.props.stop}
         audioInProgress={this.props.audioInProgress}
@@ -32,7 +31,6 @@ class HomeContainer extends Component {
 
 HomeContainer.propTypes = {
   updatePlaylist: PropTypes.func.isRequired,
-  runSong: PropTypes.func.isRequired,
   play: PropTypes.func.isRequired,
   stop: PropTypes.func.isRequired,
   playlist: PropTypes.array.isRequired,
@@ -42,7 +40,6 @@ HomeContainer.propTypes = {
 
 const mapDispatchToProps = ({
   updatePlaylist,
-  runSong,
   play,
   stop
 })

@@ -12,7 +12,7 @@ class PlayerPlaylist extends Component {
         </div>
         <Dropzone onDrop={this.props.onDrop} className='playlist'>
           { this.props.playlist.map((song, i) => (
-            <PlaylistElement song={song} index={i + 1} runSong={this.props.runSong} key={i} />
+            <PlaylistElement song={song} index={i + 1} play={this.props.play} key={i} />
           )) }
         </Dropzone>
       </div>
@@ -23,7 +23,7 @@ class PlayerPlaylist extends Component {
 PlayerPlaylist.propTypes = {
   playlist: PropTypes.array.isRequired,
   onDrop: PropTypes.func.isRequired,
-  runSong: PropTypes.func.isRequired
+  play: PropTypes.func.isRequired
 }
 
 export default PlayerPlaylist

@@ -36,12 +36,6 @@ export default function counter (state = initialState, action) {
         playlist: action.playlist
       }
 
-    case AUDIO.RUN_SONG:
-      return {
-        ...state,
-        currentPlayedId: action.id
-      }
-
     case AUDIO.PLAY:
       if (state.playlist.length) {
         return {

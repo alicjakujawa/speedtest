@@ -38,7 +38,7 @@ class HomeView extends Component {
           <PlayerActions play={this.props.play} stop={this.props.stop} progress='40' />
         </div>
         <div className='column'>
-          <PlayerPlaylist runSong={this.props.runSong} onDrop={this.props.onDrop} playlist={this.props.playlist} />
+          <PlayerPlaylist play={this.props.play} onDrop={this.props.onDrop} playlist={this.props.playlist} />
         </div>
       </div>
     )
@@ -48,7 +48,6 @@ class HomeView extends Component {
 HomeView.propTypes = {
   onDrop: PropTypes.func.isRequired,
   playlist: PropTypes.array.isRequired,
-  runSong: PropTypes.func.isRequired,
   play: PropTypes.func.isRequired,
   stop: PropTypes.func.isRequired,
   audioInProgress: PropTypes.bool.isRequired

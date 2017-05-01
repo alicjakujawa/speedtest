@@ -5,7 +5,7 @@ class PlaylistElement extends Component {
 
   runSong (e, id) {
     e.stopPropagation()
-    this.props.runSong(id)
+    this.props.play(id)
   }
 
   render () {
@@ -26,7 +26,7 @@ class PlaylistElement extends Component {
 PlaylistElement.propTypes = {
   song: PropTypes.object,
   index: PropTypes.number,
-  runSong: PropTypes.func
+  play: PropTypes.func
 }
 
 export default PlaylistElement

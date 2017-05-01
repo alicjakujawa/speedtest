@@ -8,20 +8,6 @@ export function updatePlaylist (playlist) {
   }
 }
 
-function run (id) {
-  return {
-    type: AUDIO.RUN_SONG,
-    id
-  }
-}
-
-export function runSong (id) {
-  return (dispatch, getState) => {
-    // const state = getState()
-    dispatch(run(id))
-  }
-}
-
 function setDecodedId (decodeId) {
   return {
     type: AUDIO.DECODE,
@@ -51,13 +37,6 @@ export function stop () {
     type: AUDIO.STOP
   }
 }
-
-// export function start () {
-//   return (dispatch, getState) => {
-//     startPlay()
-//     dispatch(setAudioInProgress())
-//   }
-// }
 
 export function startDecode (decodeId) {
   return (dispatch, getState) => {
