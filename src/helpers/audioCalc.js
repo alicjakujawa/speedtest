@@ -1,4 +1,4 @@
-const sumRange = (buf, min, max) => {
+export const sumRange = (buf, min, max) => {
   let sum = 0
   for (let i = min; i < max; i++) {
     sum += buf[i]

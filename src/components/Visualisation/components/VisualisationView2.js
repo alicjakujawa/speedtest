@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 // import chroma from 'chroma-js'
 import { getAnalyser } from '../../../audioProvider'
 import { draw } from '../../../helpers/visualisation'
-import { makePeakDetector, linearPeak } from '../../../helpers/audioCalc'
+import { makePeakDetector, sumRange } from '../../../helpers/audioCalc'
 
 class VisualisationView2 extends Component {
 
@@ -10,7 +10,7 @@ class VisualisationView2 extends Component {
     this.analyser = getAnalyser()
     this.freqDomain = new Uint8Array(this.analyser.frequencyBinCount)
     let bands = []
-    const bins = this.freqDomain
+    const bins = this.freqDomain.length
     bands.push([0, Math.floor(bins - 1)])
     bands.push([Math.floor(bins / 4), Math.floor(bins * 2 / 3)])
     bands.push([0, Math.floor(bins / 5)])
@@ -70,8 +70,17 @@ class VisualisationView2 extends Component {
     // const colorScale = chroma.scale('Spectral').domain([5, 10]).out('hex')
     // const domain = this.freqDomain
     this.analyser.getByteFrequencyData(this.freqDomain)
-    this.peaks.forEach(peak => peak.feed(this.freqDomain))
+
+    // this.peaks.forEach(peak => peak.feed(this.freqDomain))
     const ctx = this.canvas.getContext('2d')
+    const peakData = {
+      lows: this.peaks[1].feed(this.freqDomain),
+      mids: this.peaks[2].feed(this.freqDomain),
+      highs: this.peaks[3].feed(this.freqDomain),
+      amplitude: sumRange(this.freqDomain, 0, this.freqDomain.length) / (255 * (this.freqDomain.length - 1))
+    }
+
+    // console.log(peakData)
 
     // let total = domain.length
     const w = this.canvas.width
@@ -80,7 +89,7 @@ class VisualisationView2 extends Component {
 
     this.initFramebuffer(ctx, w, h)
 
-    draw(dt, T, ctx, w, h, this.imgData.data)
+    this.state = draw(dt, T, w, h, this.imgData.data, peakData, this.state)
 
     this.swapBuffer(ctx)
   }
