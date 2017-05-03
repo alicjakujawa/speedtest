@@ -11,34 +11,34 @@ export const linearPeak = (peakVal, from, to) => {
   return to * i + from * (1 - i)
 }
 
-export const makePeakDetector = (min, max) => {
-  let lastPeak = 0
-  let threshold = 0
-  const decay = (max - min) / 2
+export const feedPeakDetector = (peak, freq) => {
+  const { threshold, decay, min, max, lastPeak } = peak
+  const data = sumRange(freq, min, max)
+  let newThreshold = Math.max(0, threshold - decay)
+  let newLastPeak = 0
+  if (data > newThreshold) {
+    newThreshold = data + decay * 5
+  } else {
+    newLastPeak = lastPeak + 1
+  }
   return {
-    feed (buf) {
-      const data = sumRange(buf, min, max)
-      threshold = Math.max(0, threshold - decay)
-      if (data > threshold) {
-        lastPeak = 0
-        threshold = data + decay * 5
-      } else {
-        lastPeak++
-      }
-      return lastPeak
-    },
-    get () {
-      return {
-        v: lastPeak,
-        min,
-        max
-      }
-    }
+    ...peak,
+    threshold: newThreshold,
+    lastPeak: newLastPeak
   }
 }
 
-export const randomCoord = (type, w, h, step) => {
-  const dimension = (type === 'x') ? w : h
+export const makePeakDetector = (min, max) => {
+  return {
+    min,
+    max,
+    decay: (max - min) / 2,
+    threshold: 0,
+    lastPeak: 0
+  }
+}
+
+export const randomCoord = (dimension, step) => {
   return Math.random() * (dimension - 2 * step) + step
 }
 

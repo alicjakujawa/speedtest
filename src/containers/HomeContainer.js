@@ -9,8 +9,6 @@ class HomeContainer extends Component {
   componentDidMount () {
     this.unregisterStream = streamFiles(files => {
       this.props.updatePlaylist(files)
-      // FIXME: "HMR"
-      this.props.play()
     })
   }
 

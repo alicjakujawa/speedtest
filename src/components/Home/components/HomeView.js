@@ -2,8 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import SongDetails from '../../SongDetails/components/SongDetails'
 import PlayerActions from '../../PlayerActions/components/PlayerActions'
 import PlayerPlaylist from '../../PlayerPlaylist/components/PlayerPlaylist'
-import Visualisation from '../../Visualisation'
+import { visualisations } from '../../Visualisation'
 import './HomeView.scss'
+console.log('visualisations', visualisations)
 
 class HomeView extends Component {
   constructor (props) {
@@ -11,8 +12,17 @@ class HomeView extends Component {
     this.state = {
       offsetWidth: 0,
       offsetHeight: 0,
-      show: false
+      show: false,
+      visId: 0
     }
+
+    this.changeVisualisation = this.changeVisualisation.bind(this)
+  }
+
+  changeVisualisation () {
+    this.setState({
+      visId: (this.state.visId + 1) % visualisations.length
+    })
   }
 
   componentDidMount () {
@@ -21,10 +31,11 @@ class HomeView extends Component {
   }
 
   render () {
+    const Visualisation = visualisations[this.state.visId]
     return (
       <div className='wrapper'>
         <div className='column column-left'>
-          <div className='visualisation' ref='visualisation'>
+          <div className='visualisation' ref='visualisation' onClick={this.changeVisualisation}>
             {this.state.show
               ? <Visualisation
                 width={this.state.offsetWidth}

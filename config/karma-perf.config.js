@@ -6,6 +6,8 @@ const debug = require('debug')('app:config:karma')
 debug('Creating configuration.')
 const karmaConfig = {
   basePath : '../', // project root in relation to bin/karma.js
+  captureTimeout: 60000,
+  browserNoActivityTimeout: 30000,
   files    : [
     {
       pattern  : `./${project.dir_test}/perf-bundler.js`,
