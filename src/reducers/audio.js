@@ -53,6 +53,14 @@ export default function counter (state = initialState, action) {
         audioInProgress: false
       }
 
+    case AUDIO.CHANGE_SONG:
+      console.log(action.id)
+      return {
+        ...state,
+        currentPlayedId: action.id,
+        audioInProgress: true
+      }
+
     case AUDIO.AUDIO_IN_PROGRESS:
       return {
         ...state,

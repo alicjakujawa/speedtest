@@ -4,7 +4,6 @@ import PlayerActions from '../../PlayerActions/components/PlayerActions'
 import PlayerPlaylist from '../../PlayerPlaylist/components/PlayerPlaylist'
 import { visualisations } from '../../Visualisation'
 import './HomeView.scss'
-console.log('visualisations', visualisations)
 
 class HomeView extends Component {
   constructor (props) {
@@ -46,7 +45,13 @@ class HomeView extends Component {
             }
           </div>
           <SongDetails />
-          <PlayerActions play={this.props.play} stop={this.props.stop} progress='40' />
+          <PlayerActions
+            play={this.props.play}
+            stop={this.props.stop}
+            next={this.props.next}
+            prev={this.props.prev}
+            audioInProgress={this.props.audioInProgress}
+            progress='40' />
         </div>
         <div className='column'>
           <PlayerPlaylist play={this.props.play} onDrop={this.props.onDrop} playlist={this.props.playlist} />
@@ -61,6 +66,8 @@ HomeView.propTypes = {
   playlist: PropTypes.array.isRequired,
   play: PropTypes.func.isRequired,
   stop: PropTypes.func.isRequired,
+  next: PropTypes.func.isRequired,
+  prev: PropTypes.func.isRequired,
   audioInProgress: PropTypes.bool.isRequired
 }
 

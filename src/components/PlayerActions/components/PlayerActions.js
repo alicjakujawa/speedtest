@@ -5,14 +5,20 @@ class PlayerActions extends Component {
   render () {
     return (
       <div className='player-actions'>
-        <button className='button'><span className='glyphicon glyphicon-step-backward' /></button>
-        <button onClick={() => this.props.play(false)} className='button button-play'>
-          <span className='glyphicon glyphicon-play-circle' />
+        <button className='button' onClick={this.props.prev}>
+          <span className='glyphicon glyphicon-step-backward' />
         </button>
-        <button onClick={this.props.stop} className='button button-play'>
-          <span className='glyphicon glyphicon-stop' />
+        {this.props.audioInProgress
+          ? <button onClick={this.props.stop} className='button button-play'>
+            <span className='glyphicon glyphicon-pause' />
+          </button>
+          : <button onClick={() => this.props.play(false)} className='button button-play'>
+            <span className='glyphicon glyphicon-play-circle' />
+          </button>
+        }
+        <button className='button' onClick={this.props.next}>
+          <span className='glyphicon glyphicon-step-forward' />
         </button>
-        <button className='button'><span className='glyphicon glyphicon-step-forward' /></button>
         <div className='bar-wrapper'>
           <div className='bar' style={{ width: this.props.progress + '%' }} />
         </div>
@@ -23,8 +29,11 @@ class PlayerActions extends Component {
 
 PlayerActions.propTypes = {
   progress: PropTypes.string,
+  audioInProgress: PropTypes.bool.isRequired,
   play: PropTypes.func.isRequired,
-  stop: PropTypes.func.isRequired
+  stop: PropTypes.func.isRequired,
+  next: PropTypes.func.isRequired,
+  prev: PropTypes.func.isRequired
 }
 
 export default PlayerActions

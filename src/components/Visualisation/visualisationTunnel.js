@@ -50,9 +50,9 @@ const calcLuts = (w, h) => {
 // texture
 const binary = (x, y) => {
   return [
-    (x & y) & 254,
-    (x | y) & 254,
-    (x ^ y) & 254
+    (x & y) & 255,
+    (x | y) & 255,
+    (x ^ y) & 255
   ]
 }
 
