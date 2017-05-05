@@ -6,7 +6,8 @@ const initialState = {
   decodedAudioInfo: {},
   currentPlayedId: null, // id of file
   decodingInProgress: [], // ids currently decoded
-  audioInProgress: false
+  audioInProgress: false,
+  currentPlayedTime: 0
 }
 
 export default function counter (state = initialState, action) {
@@ -54,7 +55,6 @@ export default function counter (state = initialState, action) {
       }
 
     case AUDIO.CHANGE_SONG:
-      console.log(action.id)
       return {
         ...state,
         currentPlayedId: action.id,
@@ -65,6 +65,12 @@ export default function counter (state = initialState, action) {
       return {
         ...state,
         audioInProgress: true
+      }
+
+    case AUDIO.SET_TIME:
+      return {
+        ...state,
+        currentPlayedTime: action.time
       }
 
     default:

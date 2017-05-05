@@ -17,15 +17,17 @@ class HomeContainer extends Component {
   }
 
   render () {
+    const { audioInProgress, playlist, currentPlayedTime } = this.props
     return (
       <HomeView
-        playlist={this.props.playlist}
+        playlist={playlist}
         onDrop={addFiles}
         play={this.props.play}
         stop={this.props.stop}
         next={this.props.next}
         prev={this.props.prev}
-        audioInProgress={this.props.audioInProgress}
+        audioInProgress={audioInProgress}
+        audioTime={currentPlayedTime}
       />
     )
   }
@@ -39,7 +41,9 @@ HomeContainer.propTypes = {
   prev: PropTypes.func.isRequired,
   playlist: PropTypes.array.isRequired,
   currentPlayedId: PropTypes.string,
-  audioInProgress: PropTypes.bool.isRequired
+  audioInProgress: PropTypes.bool.isRequired,
+  decodedAudioInfo: PropTypes.object,
+  currentPlayedTime: PropTypes.number.isRequired
 }
 
 const mapDispatchToProps = ({
@@ -53,7 +57,9 @@ const mapDispatchToProps = ({
 const mapStateToProps = state => ({
   playlist: state.audio.playlist,
   currentPlayedId: state.audio.currentPlayedId,
-  audioInProgress: state.audio.audioInProgress
+  audioInProgress: state.audio.audioInProgress,
+  decodedAudioInfo: state.audio.decodedAudioInfo,
+  currentPlayedTime: state.audio.currentPlayedTime
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer)

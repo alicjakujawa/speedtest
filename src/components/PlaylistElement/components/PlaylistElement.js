@@ -9,15 +9,11 @@ class PlaylistElement extends Component {
   }
 
   render () {
-    const { id, file: { name, duration } } = this.props.song
-    const minutes = Math.floor(duration / 60)
-    const seconds = duration - minutes * 60
-    const preSec = seconds.toString().length < 2 ? '0' : ''
+    const { id, file: { name } } = this.props.song
     return (
       <div className='element' onClick={(e) => this.runSong(e, id)}>
         <span> { this.props.index } </span>
         <span className='name'> { name } </span>
-        <span className='duration'> { `${minutes}:${preSec}${seconds}` } </span>
       </div>
     )
   }

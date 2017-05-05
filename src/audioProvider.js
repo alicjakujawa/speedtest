@@ -1,8 +1,28 @@
 const audioContext = new (window.AudioContext || window.webkitAudioContext)()
+import { Reader } from 'jsmediatags'
+
 let sourceNode
 let gainNode = audioContext.createGain()
 let analyser = audioContext.createAnalyser()
 analyser.smoothingTimeConstant = 0.5
+
+export const getAudioInfo = (audioFile) => {
+  new Reader(audioFile)
+  .setTagsToRead(['title', 'artist', 'album'])
+  .read({
+    onSuccess: function (tag) {
+      console.log(tag)
+    },
+    onError: function (error) {
+      console.log(':(', error.type, error.info)
+    }
+  })
+  return new Promise((resolve, reject) => {
+    new Reader(audioFile)
+      .setTagsToRead(['title', 'artist', 'album'])
+      .read({ onSuccess: resolve })
+  })
+}
 
 export const setCurrentPlayBuffer = (buffer) => {
   if (sourceNode && sourceNode.buffer === buffer) {

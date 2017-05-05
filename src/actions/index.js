@@ -8,6 +8,13 @@ export function updatePlaylist (playlist) {
   }
 }
 
+export function setCurrentPlayTime (time) {
+  return {
+    type: AUDIO.SET_TIME,
+    time
+  }
+}
+
 function setDecodedId (decodeId) {
   return {
     type: AUDIO.DECODE,

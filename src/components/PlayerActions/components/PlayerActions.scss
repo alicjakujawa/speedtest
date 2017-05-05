@@ -39,3 +39,16 @@
   height: 2px;
   transition: width 1s linear;
 }
+
+.time-bar {
+  span {
+    float: left;
+    margin-top: 5px;
+    font-size: 11px;
+    color: #fff;
+  }
+
+  span:last-child {
+    float: right;
+  }
+}

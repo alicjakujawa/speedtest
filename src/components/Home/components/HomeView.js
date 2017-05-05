@@ -51,6 +51,7 @@ class HomeView extends Component {
             next={this.props.next}
             prev={this.props.prev}
             audioInProgress={this.props.audioInProgress}
+            audioTime={this.props.audioTime}
             progress='40' />
         </div>
         <div className='column'>
@@ -68,7 +69,8 @@ HomeView.propTypes = {
   stop: PropTypes.func.isRequired,
   next: PropTypes.func.isRequired,
   prev: PropTypes.func.isRequired,
-  audioInProgress: PropTypes.bool.isRequired
+  audioInProgress: PropTypes.bool.isRequired,
+  audioTime: PropTypes.number
 }
 
 export default HomeView

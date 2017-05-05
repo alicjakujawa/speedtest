@@ -19,6 +19,9 @@ const config = {
     ]
   },
   devtool : project.compiler_devtool,
+  node: {
+    fs: 'empty'
+  },
   module: {
     rules: [
       {
