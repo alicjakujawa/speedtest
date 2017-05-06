@@ -1,4 +1,4 @@
-import { startDecode, setCurrentPlayTime } from '../actions'
+import { startDecode } from '../actions'
 import { shouldTriggerDecode, decodedPlayedSelector, playIdSelector } from '../selectors/audio'
 import { setCurrentPlayBuffer } from '../audioProvider'
 
@@ -14,7 +14,6 @@ export default ({ dispatch, getState }) => next => action => {
   const decodedBuffer = decodedPlayedSelector(state)
   if (decodedBuffer) {
     setCurrentPlayBuffer(decodedBuffer)
-    dispatch(setCurrentPlayTime(decodedBuffer.duration))
   }
 
   return ret

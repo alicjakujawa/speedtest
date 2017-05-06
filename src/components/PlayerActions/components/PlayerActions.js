@@ -1,10 +1,31 @@
 import React, { Component, PropTypes } from 'react'
 import './PlayerActions.scss'
 import moment from 'moment'
+// import { getAudioContext } from '../../../audioProvider'
 
 class PlayerActions extends Component {
+  // componentDidMount () {
+  //   this.currentTimeInterval = null
+  //   const audioContext = getAudioContext()
+  //   // TODO HOW -.-
+  //   if (this.props.audioInProgress) {
+  //     this.currentTimeInterval = setInterval(() => {
+  //       console.log(audioContext.currentTime)
+  //     }, 500)
+  //   } else {
+  //     clearInterval(this.currentTimeInterval)
+  //   }
+  // }
+
   render () {
-    const audioTime = moment.utc(this.props.audioTime * 1000).format('mm:ss')
+    const { decodedAudioInfo, currentPlayedId } = this.props
+    const decodedBuffer = decodedAudioInfo[currentPlayedId]
+    let audioTime = '00:00'
+
+    if (this.props.audioInProgress) {
+      audioTime = moment.utc(decodedBuffer && decodedBuffer.duration * 1000).format('mm:ss')
+    }
+
     return (
       <div className='player-actions'>
         <button className='button' onClick={this.props.prev}>
@@ -40,7 +61,10 @@ PlayerActions.propTypes = {
   stop: PropTypes.func.isRequired,
   next: PropTypes.func.isRequired,
   prev: PropTypes.func.isRequired,
-  audioTime: PropTypes.number
+  audioTime: PropTypes.string,
+  decodedAudioInfo: PropTypes.object,
+  currentPlayedId: PropTypes.string,
+  progressTemp: PropTypes.number.isRequired
 }
 
 export default PlayerActions
