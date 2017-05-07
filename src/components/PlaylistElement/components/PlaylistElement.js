@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import './PlaylistElement.scss'
+import SongName from '../../SongName'
 import Time from '../../Time'
 
 class PlaylistElement extends Component {
@@ -10,11 +11,14 @@ class PlaylistElement extends Component {
   }
 
   render () {
-    const { id, artist, title, duration } = this.props.song
+    const { id, duration } = this.props.song
+
     return (
       <div className='element' onClick={(e) => this.runSong(e, id)}>
         <span> { this.props.index } </span>
-        <span className='name'> { artist } - { title } </span>
+        <span className='name'>
+          <SongName song={this.props.song} />
+        </span>
         <span className='duration'>
           <Time time={duration} />
         </span>

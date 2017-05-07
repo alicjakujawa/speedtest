@@ -1,33 +1,11 @@
 import { AUDIO } from '../constants/ActionTypes'
-import { getAudioContext, stopPlay, startPlay } from '../audioProvider'
+import { stopPlay, startPlay } from '../audioProvider'
 import { playedItemSelector } from '../selectors/audio'
 
 export function updatePlaylist (playlist) {
   return {
     type: AUDIO.PLAYLIST_UPDATED,
     playlist
-  }
-}
-
-export function setCurrentPlayTime (time) {
-  return {
-    type: AUDIO.SET_TIME,
-    time
-  }
-}
-
-function setDecodedId (decodeId) {
-  return {
-    type: AUDIO.DECODE,
-    decodeId
-  }
-}
-
-function setDecodedBuffer (buffer, id) {
-  return {
-    type: AUDIO.DECODED_BUFFER,
-    buffer,
-    id
   }
 }
 
@@ -82,21 +60,6 @@ function change (id) {
   return {
     type: AUDIO.CHANGE_SONG,
     id
-  }
-}
-
-export function startDecode (decodeId) {
-  return (dispatch, getState) => {
-    const { audio } = getState()
-    const fileObj = audio.playlist.find(file => file.id === decodeId)
-    var reader = new FileReader()
-    reader.onload = function (e) {
-      getAudioContext().decodeAudioData(e.target.result, buffer => {
-        dispatch(setDecodedBuffer(buffer, decodeId))
-      })
-    }
-    reader.readAsArrayBuffer(fileObj.file)
-    dispatch(setDecodedId(decodeId))
   }
 }
 

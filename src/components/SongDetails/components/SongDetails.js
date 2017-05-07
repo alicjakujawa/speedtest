@@ -1,34 +1,17 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import './SongDetails.scss'
+import SongName from '../../SongName'
 
-class SongDetails extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      album: '',
-      artist: '',
-      title: ''
-    }
-  }
-  componentWillReceiveProps ({ song }) {
-    if (song) {
-      const { album, artist, title } = song
-      this.setState({
-        album,
-        artist,
-        title
-      })
-    }
-  }
-  render () {
-    const { album, artist, title } = this.state
-    return (
-      <div className='song-details'>
-        <h4 className='title'>{ album }</h4>
-        <p className='subtitle'>{ artist } - { title }</p>
-      </div>
-    )
-  }
+const SongDetails = ({ song }) => {
+  const album = song && song.album || '-'
+  return (
+    <div className='song-details'>
+      <h4 className='title'>{ album }</h4>
+      <p className='subtitle'>
+        <SongName song={song} />
+      </p>
+    </div>
+  )
 }
 
 SongDetails.propTypes = {

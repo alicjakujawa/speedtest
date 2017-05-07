@@ -48,7 +48,7 @@ const gatherDuration = (file) => {
 
 const gatherMetadata = async (file) => {
   const [{ tags }, duration] = await Promise.all([
-    getAudioInfo(file),
+    getAudioInfo(file).catch(x => ({ tags: {} })),
     gatherDuration(file)
   ])
 

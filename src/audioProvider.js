@@ -37,45 +37,15 @@ export const getAudioInfo = (audioFile) => {
   })
 }
 
-export const setCurrentPlayBuffer = (audioFile) => {
-  // const src = URL.createObjectURL(audioFile.file)
-  // if (audioTag && audioTag.src === src) {
-  //   return
-  // }
-  // audioTag.src = src
-  // audioTag.play()
-  // if (sourceNode && sourceNode.buffer === buffer) {
-  //   return
-  // }
-  //
-  // if (sourceNode && sourceNode.buffer) {
-  //   sourceNode.stop()
-  // }
-  // sourceNode = audioContext.createBufferSource()
-  // sourceNode.buffer = buffer
-  // sourceNode.connect(gainNode)
-  // gainNode.connect(analyser)
-  // analyser.connect(audioContext.destination)
-  // sourceNode.start()
-}
-
 export const getAnalyser = () => analyser
-export const getAudioTag = () => audioTag
-export const getAudioContext = () => audioContext
 
 export const stopPlay = () => {
   if (audioTag && audioTag.src) {
     audioTag.pause()
   }
-  // if (sourceNode && sourceNode.buffer) {
-  //   sourceNode.disconnect(gainNode)
-  // }
 }
 
 export const startPlay = () => {
-  // if (sourceNode && sourceNode.buffer) {
-  //   sourceNode.connect(gainNode)
-  // }
   if (audioTag && audioTag.src) {
     audioTag.play()
   }
