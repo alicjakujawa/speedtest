@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import './PlaylistElement.scss'
+import moment from 'moment'
 
 class PlaylistElement extends Component {
 
@@ -9,18 +10,19 @@ class PlaylistElement extends Component {
   }
 
   render () {
-    const { id, file: { name } } = this.props.song
+    const { id, artist, title, duration } = this.props.song
     return (
       <div className='element' onClick={(e) => this.runSong(e, id)}>
         <span> { this.props.index } </span>
-        <span className='name'> { name } </span>
+        <span className='name'> { artist } - { title } </span>
+        <span className='duration'> { moment.utc(duration * 1000).format('mm:ss') } </span>
       </div>
     )
   }
 }
 
 PlaylistElement.propTypes = {
-  song: PropTypes.object,
+  song: PropTypes.object.isRequired,
   index: PropTypes.number,
   play: PropTypes.func
 }

@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import React, { Component, PropTypes } from 'react'
 import { addFiles, streamFiles } from '../fileStore'
 import { updatePlaylist, play, stop, next, prev } from '../actions'
+import { playedItemSelector } from '../selectors/audio'
 import HomeView from '../components/Home'
 
 class HomeContainer extends Component {
@@ -17,7 +18,7 @@ class HomeContainer extends Component {
   }
 
   render () {
-    const { audioInProgress, playlist, currentPlayedTime, progress, decodedAudioInfo, currentPlayedId } = this.props
+    const { audioInProgress, playlist, song, progress } = this.props
     return (
       <HomeView
         playlist={playlist}
@@ -27,10 +28,8 @@ class HomeContainer extends Component {
         next={this.props.next}
         prev={this.props.prev}
         audioInProgress={audioInProgress}
-        audioTime={currentPlayedTime}
         progress={progress}
-        decodedAudioInfo={decodedAudioInfo}
-        currentPlayedId={currentPlayedId}
+        song={song}
       />
     )
   }
@@ -45,8 +44,7 @@ HomeContainer.propTypes = {
   playlist: PropTypes.array.isRequired,
   currentPlayedId: PropTypes.string,
   audioInProgress: PropTypes.bool.isRequired,
-  decodedAudioInfo: PropTypes.object,
-  currentPlayedTime: PropTypes.string.isRequired,
+  song: PropTypes.object,
   progress: PropTypes.number.isRequired
 }
 
@@ -64,7 +62,8 @@ const mapStateToProps = state => ({
   audioInProgress: state.audio.audioInProgress,
   decodedAudioInfo: state.audio.decodedAudioInfo,
   currentPlayedTime: state.audio.currentPlayedTime,
-  progress: state.audio.progress
+  progress: state.audio.progress,
+  song: playedItemSelector(state)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer)

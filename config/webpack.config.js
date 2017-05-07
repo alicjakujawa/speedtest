@@ -29,7 +29,10 @@ const config = {
         exclude : /node_modules/,
         use: [{
           loader: 'babel-loader',
-          options: { presets: project.compiler_babel.presets }
+          options: {
+            presets: project.compiler_babel.presets,
+            plugins: ['transform-runtime']
+          }
         }]
       },
       {

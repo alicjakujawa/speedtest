@@ -1,30 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import './PlayerActions.scss'
 import moment from 'moment'
-// import { getAudioContext } from '../../../audioProvider'
 
 class PlayerActions extends Component {
-  // componentDidMount () {
-  //   this.currentTimeInterval = null
-  //   const audioContext = getAudioContext()
-  //   // TODO HOW -.-
-  //   if (this.props.audioInProgress) {
-  //     this.currentTimeInterval = setInterval(() => {
-  //       console.log(audioContext.currentTime)
-  //     }, 500)
-  //   } else {
-  //     clearInterval(this.currentTimeInterval)
-  //   }
-  // }
-
   render () {
-    const { decodedAudioInfo, currentPlayedId } = this.props
-    const decodedBuffer = decodedAudioInfo[currentPlayedId]
-    let audioTime = '00:00'
-
-    if (this.props.audioInProgress) {
-      audioTime = moment.utc(decodedBuffer && decodedBuffer.duration * 1000).format('mm:ss')
-    }
+    const { song } = this.props
+    const audioTime = song
+      ? moment.utc(song.duration * 1000).format('mm:ss')
+      : '00:00'
 
     return (
       <div className='player-actions'>
@@ -44,7 +27,7 @@ class PlayerActions extends Component {
         </button>
         <div className='time-bar'>
           <div className='bar-wrapper'>
-            <div className='bar' style={{ width: this.props.progress + '%' }} />
+            <div className='bar' style={{ width: this.props.progress * 100 + '%' }} />
           </div>
           <span>00:00</span>
           <span>{ audioTime }</span>
@@ -55,16 +38,14 @@ class PlayerActions extends Component {
 }
 
 PlayerActions.propTypes = {
-  progress: PropTypes.string,
+  progress: PropTypes.number.isRequired,
   audioInProgress: PropTypes.bool.isRequired,
   play: PropTypes.func.isRequired,
   stop: PropTypes.func.isRequired,
   next: PropTypes.func.isRequired,
   prev: PropTypes.func.isRequired,
   audioTime: PropTypes.string,
-  decodedAudioInfo: PropTypes.object,
-  currentPlayedId: PropTypes.string,
-  progressTemp: PropTypes.number.isRequired
+  song: PropTypes.object
 }
 
 export default PlayerActions

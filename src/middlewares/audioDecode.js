@@ -1,6 +1,6 @@
 import { startDecode } from '../actions'
-import { shouldTriggerDecode, decodedPlayedSelector, playIdSelector } from '../selectors/audio'
-import { setCurrentPlayBuffer } from '../audioProvider'
+import { shouldTriggerDecode, playIdSelector, playedItemSelector } from '../selectors/audio'
+import { setAudioTag } from '../audioProvider'
 
 export default ({ dispatch, getState }) => next => action => {
   const ret = next(action)
@@ -11,10 +11,11 @@ export default ({ dispatch, getState }) => next => action => {
     dispatch(startDecode(playIdSelector(state)))
   }
 
-  const decodedBuffer = decodedPlayedSelector(state)
-  if (decodedBuffer) {
-    setCurrentPlayBuffer(decodedBuffer)
-  }
+  // const decodedBuffer = decodedPlayedSelector(state)
+  // if (decodedBuffer) {
+  //   // setCurrentPlayBuffer(decodedBuffer)
+  // }
+  setAudioTag(playedItemSelector(state))
 
   return ret
 }

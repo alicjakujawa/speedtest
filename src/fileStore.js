@@ -1,5 +1,6 @@
 import localforage from 'localforage'
 import uuid from 'uuid/v4'
+import { getAudioInfo } from './audioProvider'
 
 localforage.getItem('files')
   .then(files => {
@@ -31,11 +32,40 @@ export const streamFiles = (onUpdate) => {
   }
 }
 
-export const addFiles = (files) => {
-  localFileList = [...localFileList, ...files.map(file => ({
+const gatherDuration = (file) => {
+  const localAudio = document.createElement('audio')
+  const src = URL.createObjectURL(file)
+  localAudio.src = src
+  return new Promise(resolve => {
+    const onDuration = (event) => {
+      localAudio.removeEventListener('durationchange', onDuration, false)
+      resolve(localAudio.duration)
+    }
+
+    localAudio.addEventListener('durationchange', onDuration, false)
+  })
+}
+
+const gatherMetadata = async (file) => {
+  const [{ tags }, duration] = await Promise.all([
+    getAudioInfo(file),
+    gatherDuration(file)
+  ])
+
+  return {
     file,
+    title: tags.title,
+    artist: tags.artist,
+    album: tags.album,
+    duration,
     id: uuid()
-  }))]
+  }
+}
+
+export const addFiles = async (files) => {
+  const newFilesResolved = await Promise.all(files.map(gatherMetadata))
+
+  localFileList = [...localFileList, ...newFilesResolved]
   localforage.setItem('files', localFileList)
   notifyUpdate()
 }

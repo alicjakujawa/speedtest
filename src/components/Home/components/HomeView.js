@@ -44,18 +44,16 @@ class HomeView extends Component {
               : null
             }
           </div>
-          <SongDetails />
+          <SongDetails song={this.props.song} />
           <PlayerActions
             play={this.props.play}
             stop={this.props.stop}
             next={this.props.next}
             prev={this.props.prev}
             audioInProgress={this.props.audioInProgress}
-            audioTime={this.props.audioTime}
-            decodedAudioInfo={this.props.decodedAudioInfo}
-            currentPlayedId={this.props.currentPlayedId}
-            progressTemp={this.props.progress}
-            progress='40' />
+            song={this.props.song}
+            playlist={this.props.playlist}
+            progress={this.props.progress} />
         </div>
         <div className='column'>
           <PlayerPlaylist play={this.props.play} onDrop={this.props.onDrop} playlist={this.props.playlist} />
@@ -73,10 +71,8 @@ HomeView.propTypes = {
   next: PropTypes.func.isRequired,
   prev: PropTypes.func.isRequired,
   audioInProgress: PropTypes.bool.isRequired,
-  audioTime: PropTypes.string.isRequired,
   progress: PropTypes.number.isRequired,
-  decodedAudioInfo: PropTypes.object,
-  currentPlayedId: PropTypes.string
+  song: PropTypes.object
 }
 
 export default HomeView

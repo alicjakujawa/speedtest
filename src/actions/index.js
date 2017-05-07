@@ -1,5 +1,6 @@
 import { AUDIO } from '../constants/ActionTypes'
 import { getAudioContext, stopPlay, startPlay } from '../audioProvider'
+import { playedItemSelector } from '../selectors/audio'
 
 export function updatePlaylist (playlist) {
   return {
@@ -96,5 +97,15 @@ export function startDecode (decodeId) {
     }
     reader.readAsArrayBuffer(fileObj.file)
     dispatch(setDecodedId(decodeId))
+  }
+}
+
+export function updateProgress (currentTime) {
+  return (dispatch, getState) => {
+    const file = playedItemSelector(getState())
+    return dispatch({
+      type: AUDIO.PROGRESS_UPDATED,
+      progress: currentTime / file.duration
+    })
   }
 }

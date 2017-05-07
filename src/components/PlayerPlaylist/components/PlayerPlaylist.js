@@ -8,7 +8,7 @@ class PlayerPlaylist extends Component {
     return (
       <div>
         <div className='playlist-header'>
-          <h4 className='title'>Ghost Stories</h4>
+          <h4 className='title'>Playlist</h4>
         </div>
         <Dropzone onDrop={this.props.onDrop} className='playlist'>
           { this.props.playlist.map((song, i) => (

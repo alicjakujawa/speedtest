@@ -7,7 +7,6 @@ const initialState = {
   currentPlayedId: null, // id of file
   decodingInProgress: [], // ids currently decoded
   audioInProgress: false,
-  currentPlayedTime: '',
   progress: 0
 }
 
@@ -43,7 +42,7 @@ export default function counter (state = initialState, action) {
         return {
           ...state,
           audioInProgress: true,
-          currentPlayedId: action.id || state.playlist[0].id
+          currentPlayedId: action.id || state.currentPlayedId || state.playlist[0].id
         }
       }
       return state
@@ -51,7 +50,6 @@ export default function counter (state = initialState, action) {
     case AUDIO.STOP:
       return {
         ...state,
-        currentPlayedId: null,
         audioInProgress: false
       }
 
@@ -68,11 +66,10 @@ export default function counter (state = initialState, action) {
         audioInProgress: true
       }
 
-    case AUDIO.SET_TIME:
+    case AUDIO.PROGRESS_UPDATED:
       return {
         ...state,
-        currentPlayedTime: action.time,
-        progress: 0
+        progress: action.progress
       }
 
     default:
