@@ -1,13 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import './PlayerActions.scss'
-import moment from 'moment'
+import Time from '../../Time'
 
 class PlayerActions extends Component {
   render () {
     const { song } = this.props
-    const audioTime = song
-      ? moment.utc(song.duration * 1000).format('mm:ss')
-      : '00:00'
 
     return (
       <div className='player-actions'>
@@ -29,8 +26,8 @@ class PlayerActions extends Component {
           <div className='bar-wrapper'>
             <div className='bar' style={{ width: this.props.progress * 100 + '%' }} />
           </div>
-          <span>00:00</span>
-          <span>{ audioTime }</span>
+          <Time time={song ? song.duration * this.props.progress : 0} />
+          <Time time={song ? song.duration : 0} />
         </div>
       </div>
     )

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import './PlaylistElement.scss'
-import moment from 'moment'
+import Time from '../../Time'
 
 class PlaylistElement extends Component {
 
@@ -15,7 +15,9 @@ class PlaylistElement extends Component {
       <div className='element' onClick={(e) => this.runSong(e, id)}>
         <span> { this.props.index } </span>
         <span className='name'> { artist } - { title } </span>
-        <span className='duration'> { moment.utc(duration * 1000).format('mm:ss') } </span>
+        <span className='duration'>
+          <Time time={duration} />
+        </span>
       </div>
     )
   }
