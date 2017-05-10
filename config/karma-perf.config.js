@@ -22,7 +22,7 @@ const karmaConfig = {
   preprocessors : {
     [`${project.dir_test}/perf-bundler.js`] : ['webpack', 'sourcemap']
   },
-  browsers : ['Chrome'],
+  browsers : ['Chrome', 'Firefox', 'Safari'],
   webpack  : {
     devtool : 'inline-source-map',
     resolve : webpackConfig.resolve,
