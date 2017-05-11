@@ -10,6 +10,11 @@ class PlaylistElement extends Component {
     this.props.play(id)
   }
 
+  removeFile (e, id) {
+    e.stopPropagation()
+    this.props.removeFile(id)
+  }
+
   render () {
     const { id, duration } = this.props.song
 
@@ -22,6 +27,9 @@ class PlaylistElement extends Component {
         <span className='duration'>
           <Time time={duration} />
         </span>
+        <button className='button remove' onClick={(e) => this.removeFile(e, id)}>
+          <span className='glyphicon glyphicon-remove' />
+        </button>
       </div>
     )
   }
@@ -30,7 +38,8 @@ class PlaylistElement extends Component {
 PlaylistElement.propTypes = {
   song: PropTypes.object.isRequired,
   index: PropTypes.number,
-  play: PropTypes.func
+  play: PropTypes.func,
+  removeFile: PropTypes.func.isRequired
 }
 
 export default PlaylistElement

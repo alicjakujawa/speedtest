@@ -70,6 +70,15 @@ export const addFiles = async (files) => {
   notifyUpdate()
 }
 
+export const removeFile = (fileId) => {
+  const idx = localFileList.findIndex(file => file.id === fileId)
+  if (idx >= 0) {
+    localFileList.splice(idx, 1)
+    localforage.setItem('files', localFileList)
+    return localFileList
+  }
+}
+
 // DEBUG
 streamFiles((files) => {
   console.log('files', files)

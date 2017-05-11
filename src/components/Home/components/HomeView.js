@@ -56,7 +56,12 @@ class HomeView extends Component {
             progress={this.props.progress} />
         </div>
         <div className='column'>
-          <PlayerPlaylist play={this.props.play} onDrop={this.props.onDrop} playlist={this.props.playlist} />
+          <PlayerPlaylist
+            play={this.props.play}
+            onDrop={this.props.onDrop}
+            removeFile={this.props.removeFile}
+            playlist={this.props.playlist}
+          />
         </div>
       </div>
     )
@@ -65,6 +70,7 @@ class HomeView extends Component {
 
 HomeView.propTypes = {
   onDrop: PropTypes.func.isRequired,
+  removeFile: PropTypes.func.isRequired,
   playlist: PropTypes.array.isRequired,
   play: PropTypes.func.isRequired,
   stop: PropTypes.func.isRequired,

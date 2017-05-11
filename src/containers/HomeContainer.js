@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import React, { Component, PropTypes } from 'react'
-import { addFiles, streamFiles } from '../fileStore'
+import { addFiles, streamFiles, removeFile } from '../fileStore'
 import { updatePlaylist, play, stop, next, prev } from '../actions'
 import { playedItemSelector } from '../selectors/audio'
 import HomeView from '../components/Home'
@@ -13,6 +13,10 @@ class HomeContainer extends Component {
     })
   }
 
+  removeFileFromList (id) {
+    this.props.updatePlaylist(removeFile(id))
+  }
+
   componentWillUnmount () {
     this.unregisterStream()
   }
@@ -23,6 +27,7 @@ class HomeContainer extends Component {
       <HomeView
         playlist={playlist}
         onDrop={addFiles}
+        removeFile={id => this.removeFileFromList(id)}
         play={this.props.play}
         stop={this.props.stop}
         next={this.props.next}
