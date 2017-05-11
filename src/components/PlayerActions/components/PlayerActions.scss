@@ -1,4 +1,5 @@
 .player-actions {
+  position: relative;
   padding: 50px 16px;
 }
 
@@ -51,4 +52,12 @@
   span:last-child {
     float: right;
   }
+}
+
+input.volume {
+  position: absolute;
+  right: 0;
+  top: 80px;
+  transform: rotate(-90deg);
+  width: 100px;
 }

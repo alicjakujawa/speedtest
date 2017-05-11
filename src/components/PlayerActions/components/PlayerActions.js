@@ -22,6 +22,7 @@ class PlayerActions extends Component {
         <button className='button' onClick={this.props.next}>
           <span className='glyphicon glyphicon-step-forward' />
         </button>
+        <input type='range' className='volume' onChange={e => console.log(e.target.value)} />
         <div className='time-bar'>
           <div className='bar-wrapper'>
             <div className='bar' style={{ width: this.props.progress * 100 + '%' }} />
