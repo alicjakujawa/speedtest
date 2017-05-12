@@ -50,3 +50,7 @@ export const startPlay = () => {
     audioTag.play()
   }
 }
+
+export const changeVol = (vol) => {
+  gainNode.gain.value = vol
+}
