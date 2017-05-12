@@ -1,6 +1,7 @@
 import localforage from 'localforage'
 import uuid from 'uuid/v4'
 import { getAudioInfo } from './audioProvider'
+import R from 'ramda'
 
 localforage.getItem('files')
   .then(files => {
@@ -73,9 +74,9 @@ export const addFiles = async (files) => {
 export const removeFile = (fileId) => {
   const idx = localFileList.findIndex(file => file.id === fileId)
   if (idx >= 0) {
-    localFileList.splice(idx, 1)
+    localFileList = R.remove(idx, 1, localFileList)
     localforage.setItem('files', localFileList)
-    return localFileList
+    notifyUpdate()
   }
 }
 

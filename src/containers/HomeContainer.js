@@ -13,10 +13,6 @@ class HomeContainer extends Component {
     })
   }
 
-  removeFileFromList (id) {
-    this.props.updatePlaylist(removeFile(id))
-  }
-
   componentWillUnmount () {
     this.unregisterStream()
   }
@@ -27,7 +23,7 @@ class HomeContainer extends Component {
       <HomeView
         playlist={playlist}
         onDrop={addFiles}
-        removeFile={id => this.removeFileFromList(id)}
+        removeFile={removeFile}
         play={this.props.play}
         stop={this.props.stop}
         next={this.props.next}
